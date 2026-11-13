@@ -1,0 +1,16 @@
+{
+  "name": "bihar-farmer-assistant",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Voice-first agricultural assistant for farmers in Bihar (Bhojpuri/Hindi).",
+  "type": "module",
+  "scripts": {
+    "setup": "npm ci --prefix server && npm ci --prefix web",
+    "dev": "node scripts/dev.mjs",
+    "test": "npm test --prefix server",
+    "typecheck": "npm run typecheck --prefix server && npm run typecheck --prefix web",
+    "build": "npm run build --prefix server && npm run build --prefix web",
+    "start": "node scripts/start.mjs"
+  },
+  "engines": { "node": ">=20" }
+}

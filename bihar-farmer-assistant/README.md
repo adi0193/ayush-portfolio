@@ -18,22 +18,80 @@ A voice-first agricultural assistant for small and marginal farmers in Bihar. Fa
 | 👤 Farmer profile | Stays on the device by default. Server copy only with consent. No Aadhaar. One-tap delete |
 | 📘 Offline library, 👩‍🌾 expert help | Knowledge cached for offline use. Only verified national helplines are shown |
 
-## Run it
+## Getting started
+
+Requires **Node.js 20+** (22 recommended, see `.nvmrc`). Run all commands from this folder.
 
 ```bash
-cd server
-cp .env.example .env
-npm install
-npm run dev
+npm run setup
 ```
 
 ```bash
-cd web
-npm install
+cp server/.env.example server/.env
+```
+
+Edit `server/.env` (all optional):
+- `DATA_GOV_IN_API_KEY` turns on live mandi prices. Without it, the app says prices are unavailable.
+- `ANTHROPIC_API_KEY` turns on AI-phrased answers. Without it, the built-in templates answer.
+- `ADMIN_TOKEN` (12+ characters) protects the content-review endpoints.
+
+**Develop** (API on :8080, app on http://localhost:5173 with hot reload):
+
+```bash
 npm run dev
 ```
 
-Open http://localhost:5173. Tests: `cd server && npm test` (33 tests). Docker: `docker compose up --build` → http://localhost:8081.
+**Production-style, one process** (the API also serves the built app at http://localhost:8080):
+
+```bash
+npm run build
+```
+
+```bash
+npm start
+```
+
+**Checks:**
+
+```bash
+npm run typecheck
+```
+
+```bash
+npm test
+```
+
+**Docker** (http://localhost:8081):
+
+```bash
+docker compose up --build
+```
+
+Voice input needs Chrome or Edge, served over `https://` or `localhost`.
+
+### Scripts
+
+| Command | What it does |
+|---|---|
+| `npm run setup` | Clean-installs `server/` and `web/` dependencies from their lockfiles |
+| `npm run dev` | Runs API + web dev server together (Ctrl+C stops both) |
+| `npm run build` | Compiles the API to `server/dist` and the PWA to `web/dist` |
+| `npm start` | Runs the built API and serves `web/dist` from it |
+| `npm test` / `npm run typecheck` | Server tests (33) / type checks for both packages |
+
+### Moving this folder into its own repository
+
+The folder is self-contained (no dependency on the parent repo):
+
+```bash
+cp -r bihar-farmer-assistant ~/bihar-farmer-assistant
+```
+
+```bash
+cd ~/bihar-farmer-assistant && git init && git add . && git commit -m "Initial commit"
+```
+
+Once it is its own repo, `.github/workflows/ci.yml` runs setup, typecheck, tests and build on every push.
 
 ## Documentation (deliverables)
 
@@ -55,6 +113,9 @@ Screenshots: [`docs/screenshots/`](docs/screenshots).
 ## Layout
 
 ```
+package.json      root scripts (setup/dev/build/start/test)
+scripts/          dev.mjs (runs both servers), start.mjs (single-process production)
+.github/          CI workflow (active when this folder is its own repo)
 server/   Node + Express + TypeScript API
   src/data/        38 districts, crop lexicon, knowledge base, schemes (each with source + review status)
   src/services/    nlu, assistant (dialogue), retrieval, safety, mandi, weather, store

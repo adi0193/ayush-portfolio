@@ -22,18 +22,21 @@ cd ../web && npm run build
 ## 17. Deployment
 
 ### Local
+From the project root:
+
 ```bash
-cd bihar-farmer-assistant/server
-cp .env.example .env    # add DATA_GOV_IN_API_KEY to enable live mandi prices; ANTHROPIC_API_KEY optional
-npm install
-npm run dev             # http://localhost:8080
+npm run setup
 ```
+
 ```bash
-cd bihar-farmer-assistant/web
-npm install
-npm run dev             # http://localhost:5173 (proxies /api to :8080)
+cp server/.env.example server/.env
 ```
-Voice input needs Chrome/Edge on Android or desktop, over `https://` or `localhost`.
+
+```bash
+npm run dev
+```
+
+The API runs on :8080 and the app on http://localhost:5173 (it proxies `/api`). For a production-style single process, run `npm run build` then `npm start` (http://localhost:8080). Voice input needs Chrome/Edge over `https://` or `localhost`.
 
 ### Docker (single host)
 ```bash

@@ -3,6 +3,8 @@ import cors from 'cors';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import { timingSafeEqual } from 'node:crypto';
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
 import { z } from 'zod';
 import { config } from './lib/config.js';
 import { DISTRICTS, findDistrict, ZONE_LABEL_HI } from './data/districts.js';
@@ -182,6 +184,16 @@ export function createApp(deps: AppDeps = {}) {
       next(e);
     }
   });
+
+  // Optional: serve the built PWA from the same process (set WEB_DIST=/path/to/web/dist).
+  const webDist = process.env.WEB_DIST;
+  if (webDist && existsSync(join(webDist, 'index.html'))) {
+    app.use('/assets', express.static(join(webDist, 'assets'), { immutable: true, maxAge: '365d' }));
+    app.use(express.static(webDist, { index: false, setHeaders: (res, path) => { if (path.endsWith('sw.js')) res.setHeader('Cache-Control', 'no-cache'); } }));
+    app.get(/^(?!\/api\/).*/, (_req, res) => res.sendFile(join(webDist, 'index.html')));
+  }
+
+  app.use('/api', (_req, res) => res.status(404).json({ error: 'not_found' }));
 
   app.use((err: unknown, _req: Request, res: Response, _next: NextFunction) => {
     void _next;
