@@ -13,11 +13,14 @@ const navItems = [
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
-  const location = useLocation()
+  const { pathname } = useLocation()
+  const [menuPath, setMenuPath] = useState(pathname)
 
-  useEffect(() => {
+  // Close the mobile menu on navigation (state adjusted during render, no extra effect pass)
+  if (menuPath !== pathname) {
+    setMenuPath(pathname)
     setMenuOpen(false)
-  }, [location.pathname])
+  }
 
   useEffect(() => {
     if (menuOpen) {

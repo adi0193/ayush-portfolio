@@ -8,7 +8,6 @@ export default function VideoScriptingProject() {
 
   const {
     title,
-    overview,
     toolsUsed,
     reelScript,
     youtubeScript

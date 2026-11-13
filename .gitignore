@@ -36,3 +36,7 @@ service-account*.json
 *.njsproj
 *.sln
 *.sw?
+
+# Local tool artifacts
+.playwright-mcp/
+.vercel

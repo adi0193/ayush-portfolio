@@ -9,10 +9,6 @@ export default function SocialCarouselProject() {
 
   const {
     title,
-    platform,
-    format,
-    targetAudience,
-    engagementGoal,
     toolsUsed,
     slides,
     captionCopy,
