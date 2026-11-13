@@ -6,9 +6,6 @@ export default function ProductReviewProject() {
   const {
     title,
     subtitle,
-    category,
-    contentType,
-    targetAudience,
     toolsUsed,
     verdictSummary,
     specsComparison,

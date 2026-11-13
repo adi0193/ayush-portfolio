@@ -20,3 +20,12 @@ Open the local URL printed in the terminal.
 ```bash
 npm run build
 ```
+
+## Deployment (Vercel)
+
+This is a static single-page app (Vite + React Router). `vercel.json` rewrites every
+non-file path (e.g. `/projects`, `/resume`) to `index.html` so direct visits and page
+refreshes on any route load the app instead of returning Vercel's `404: NOT_FOUND`.
+Real files in `public/` and `dist/assets/` are served as-is, and missing files still 404.
+
+Requires Node.js 22 (see `engines` in `package.json`). No environment variables are needed.
