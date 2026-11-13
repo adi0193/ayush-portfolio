@@ -1,0 +1,20 @@
+services:
+  api:
+    build: ./server
+    env_file: ./server/.env
+    environment:
+      CORS_ORIGIN: http://localhost:8081
+    restart: unless-stopped
+  web:
+    build: ./web
+    ports:
+      - "8081:80"
+    depends_on: [api]
+    restart: unless-stopped
+  # Production data stores (MVP runs in-memory; wire these in milestone M2):
+  # db:
+  #   image: postgis/postgis:16-3.4
+  #   environment: { POSTGRES_PASSWORD: change-me, POSTGRES_DB: bfa }
+  #   volumes: ["./db/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql"]
+  # redis:
+  #   image: redis:7-alpine

@@ -1,0 +1,11 @@
+{
+  "name": "बिहार किसान सहायक",
+  "short_name": "किसान सहायक",
+  "description": "खेती की सही जानकारी, अपनी भाषा में।",
+  "lang": "hi",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fbf6ee",
+  "theme_color": "#256628",
+  "icons": [{ "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }]
+}

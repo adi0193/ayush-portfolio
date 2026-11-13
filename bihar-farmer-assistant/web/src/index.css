@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html { -webkit-text-size-adjust: 100%; }
+body { @apply bg-soil-50 font-sans text-gray-900 antialiased; font-size: 17px; }
+button, a, select, input { touch-action: manipulation; }
+:focus-visible { outline: 3px solid #f5b800; outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
